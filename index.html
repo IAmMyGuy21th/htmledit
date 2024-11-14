@@ -1,0 +1,164 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <style>
+      
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+      
+      .flex1 {
+        width: 100%;
+        margin: 0px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      }
+      
+      .flex2 {
+        width: 100%;
+        margin: 0px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+      
+      ol {
+        position: relative;
+        top: -30px;
+      }
+      
+      .box {
+        width: 45%;
+        height: 100%;
+        margin: 10px;
+        border-radius: 20px;
+        background-color: #eee;
+        transition: all .3s;
+      }
+      
+      .box:hover {
+        background-color: #efefef;
+        box-shadow: 0px 5px 15px 2px #0003;
+      }
+      
+      .box:active {
+        background-color: #ddd;
+        box-shadow: 0px 5px 15px -2px inset #0003;
+      }
+      
+      .container {
+        width: 100%;
+        padding: 10px;
+        margin: 0px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-self: center;
+      }
+      
+      textarea,iframe {
+        border: 3px dotted black;
+        margin: 5px;
+        border-radius: 20px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <!-- Row 1 -->
+    <div class="container">
+      <!-- First Box -->
+      <div class="box">
+        <!-- Image -->
+        <div class="flex1">
+          <textarea style="width:90%;height:200px;" id="htmlt" onkeyup="updateT()"></textarea>
+        </div>
+        <!-- Heading and List -->
+        <div class="flex2">
+          <h3>HTML</h3>
+        </div>
+      </div>
+      <!-- Second Box -->
+      <div class="box">
+        <!-- Image -->
+        <div class="flex1">
+          <textarea style="width:90%;height:200px;" id="csst" onkeyup="updateT()"></textarea>
+        </div>
+        <!-- Heading and List -->
+        <div class="flex2">
+          <h3>CSS</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Row Two -->
+    <div class="container">
+      <!-- First Box -->
+      <div class="box">
+        <!-- Image -->
+        <div class="flex1">
+          <textarea style="width:90%;height:200px;" id="jst" onkeyup="updateT()"></textarea>
+        </div>
+        <!-- Heading and List -->
+        <div class="flex2">
+          <h3>Javascript</h3>
+        </div>
+      </div>
+      <!-- Second Box -->
+      <div class="box">
+        <!-- Image -->
+        <div class="flex1">
+          <iframe style="width:90%;height:200px;background-color:white;" id="r"></iframe>
+        </div>
+        <!-- Heading and List -->
+        <div class="flex2">
+          <h3>Result</h3>
+        </div>
+      </div>
+    </div>
+
+<script>
+
+function updateT() {
+const getGeneratedPageURL = ({ html, css, js }) => {
+  const getBlobURL = (code, type) => {
+    const blob = new Blob([code], { type })
+    return URL.createObjectURL(blob)
+  }
+
+  const cssURL = getBlobURL(css, 'text/css')
+  const jsURL = getBlobURL(js, 'text/javascript')
+
+  const source = `
+    <html>
+      <head>
+        ${css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`}
+        ${js && `<script src="${jsURL}"><\/script>`}
+      </head>
+      <body>
+        ${html || ''}
+      </body>
+    </html>
+  `
+
+  return getBlobURL(source, 'text/html')
+}
+
+let htmlt = document.getElementById('htmlt').value
+let csst = document.getElementById('csst').value
+let jst = document.getElementById('jst').value
+
+const url = getGeneratedPageURL({
+  html: htmlt,
+  css: csst,
+  js: jst
+})
+
+const iframe = document.querySelector('#r')
+iframe.src = url
+}
+
+</script>
+
+ </body>
+</html>
