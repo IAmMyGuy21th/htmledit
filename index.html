@@ -63,7 +63,34 @@
         border-radius: 20px;
       }
       
+      .ubuntu-mono-regular {
+        font-family: "Ubuntu Mono", monospace;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .ubuntu-mono-bold {
+        font-family: "Ubuntu Mono", monospace;
+        font-weight: 700;
+        font-style: normal;
+      }
+
+      .ubuntu-mono-regular-italic {
+        font-family: "Ubuntu Mono", monospace;
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      .ubuntu-mono-bold-italic {
+        font-family: "Ubuntu Mono", monospace;
+        font-weight: 700;
+        font-style: italic;
+      }
+
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- Row 1 -->
@@ -72,7 +99,7 @@
       <div class="box">
         <!-- Image -->
         <div class="flex1">
-          <textarea style="width:90%;height:200px;" id="htmlt" onkeyup="updateT()"></textarea>
+          <textarea class="ubuntu-mono-regular" style="width:90%;height:200px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="htmlt" onkeyup="updateT()"></textarea>
         </div>
         <!-- Heading and List -->
         <div class="flex2">
@@ -83,7 +110,7 @@
       <div class="box">
         <!-- Image -->
         <div class="flex1">
-          <textarea style="width:90%;height:200px;" id="csst" onkeyup="updateT()"></textarea>
+          <textarea class="ubuntu-mono-regular" style="width:90%;height:200px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="csst" onkeyup="updateT()"></textarea>
         </div>
         <!-- Heading and List -->
         <div class="flex2">
@@ -97,7 +124,7 @@
       <div class="box">
         <!-- Image -->
         <div class="flex1">
-          <textarea style="width:90%;height:200px;" id="jst" onkeyup="updateT()"></textarea>
+          <textarea class="ubuntu-mono-regular" style="width:90%;height:200px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="jst" onkeyup="updateT()"></textarea>
         </div>
         <!-- Heading and List -->
         <div class="flex2">
@@ -108,13 +135,19 @@
       <div class="box">
         <!-- Image -->
         <div class="flex1">
-          <iframe style="width:90%;height:200px;background-color:white;" id="r"></iframe>
+          <textarea class="ubuntu-mono-regular" style="width:90%;height:200px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="ht" onkeyup="updateT()"></textarea>
         </div>
         <!-- Heading and List -->
         <div class="flex2">
-          <h3>Result</h3>
+          <h3>HTML: Head</h3>
         </div>
       </div>
+    </div>
+    <div class="flex2">
+    <h2>Result:</h2>
+    </div>
+    <div class="flex2">
+    <iframe width="85%" height="200" id="r"></iframe>
     </div>
 
 <script>
@@ -125,7 +158,7 @@ const getGeneratedPageURL = ({ html, css, js }) => {
     const blob = new Blob([code], { type })
     return URL.createObjectURL(blob)
   }
-
+  let ht = document.getElementById("ht").value
   const cssURL = getBlobURL(css, 'text/css')
   const jsURL = getBlobURL(js, 'text/javascript')
 
@@ -134,6 +167,7 @@ const getGeneratedPageURL = ({ html, css, js }) => {
       <head>
         ${css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`}
         ${js && `<script src="${jsURL}"><\/script>`}
+        ${ht}
       </head>
       <body>
         ${html || ''}
@@ -151,7 +185,7 @@ let jst = document.getElementById('jst').value
 const url = getGeneratedPageURL({
   html: htmlt,
   css: csst,
-  js: jst
+  js: jst,
 })
 
 const iframe = document.querySelector('#r')
@@ -162,3 +196,4 @@ iframe.src = url
 
  </body>
 </html>
+
