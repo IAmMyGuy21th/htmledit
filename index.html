@@ -32,7 +32,7 @@
         width: 45%;
         height: 100%;
         margin: 10px;
-        border-radius: 20px;
+        border-radius: 5px;
         background-color: #eee;
         transition: all .3s;
       }
@@ -57,10 +57,15 @@
         align-self: center;
       }
       
-      textarea,iframe {
+      textarea,iframe,input[type="text"] {
         border: 3px dotted black;
         margin: 5px;
-        border-radius: 20px;
+        border-radius: 5px;
+      }
+      
+      input[type="text"] {
+      	width:15em;
+        height:2em;
       }
       
       .ubuntu-mono-regular {
@@ -93,6 +98,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   </head>
   <body>
+  	<center>
+    <h2>Title:</h2>
+  	<input type="text" id="tit" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="htmlt" onkeyup="updateT()">
+    </center>
     <!-- Row 1 -->
     <div class="container">
       <!-- First Box -->
@@ -149,6 +158,12 @@
     <div class="flex2">
     <iframe width="85%" height="200" id="r"></iframe>
     </div>
+    <div class="flex2">
+    <h2>Code:</h2>
+    </div>
+    <div class="flex2">
+    <div id="disp"></div>
+    </div>
 
 <script>
 
@@ -159,6 +174,7 @@ const getGeneratedPageURL = ({ html, css, js }) => {
     return URL.createObjectURL(blob)
   }
   let ht = document.getElementById("ht").value
+  let tit = document.getElementById("tit").value
   const cssURL = getBlobURL(css, 'text/css')
   const jsURL = getBlobURL(js, 'text/javascript')
 
@@ -168,6 +184,7 @@ const getGeneratedPageURL = ({ html, css, js }) => {
         ${css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`}
         ${js && `<script src="${jsURL}"><\/script>`}
         ${ht}
+        <title>${tit}</title>
       </head>
       <body>
         ${html || ''}
@@ -181,7 +198,28 @@ const getGeneratedPageURL = ({ html, css, js }) => {
 let htmlt = document.getElementById('htmlt').value
 let csst = document.getElementById('csst').value
 let jst = document.getElementById('jst').value
-
+let ht = document.getElementById("ht").value
+let tit = document.getElementById("tit").value
+let code = `
+	<!DOCTYPE html>
+    <html>
+      <head>
+		<style>
+        ${csst}
+        </style>
+        <script>
+        ${jst}
+        <\/script>
+        ${ht}
+        <title>${tit}</title>
+      </head>
+      <body>
+        ${htmlt || ''}
+      </body>
+    </html>
+  `
+let codeDisp = document.getElementById("disp")
+codeDisp.innerText = code
 const url = getGeneratedPageURL({
   html: htmlt,
   css: csst,
@@ -196,4 +234,6 @@ iframe.src = url
 
  </body>
 </html>
+
+
 
